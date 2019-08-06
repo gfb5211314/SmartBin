@@ -1,0 +1,132 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¦ÌVision V5.27.1.0
+Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: 3243 3432, 34534, LIC=YA39U-SP4HF-X7XRZ-JMINQ-WTZ5J-RP36X
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.27.1.0
+Toolchain Path:  D:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 6 (build 750)
+Assembler:       Armasm.exe V5.06 update 6 (build 750)
+Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
+Library Manager: ArmAr.exe V5.06 update 6 (build 750)
+Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
+CPU DLL:         SARMCM3.DLL V5.27.1.0
+Dialog DLL:      DCM.DLL V1.17.2.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.6.0
+Dialog DLL:      TCM.DLL V1.36.1.0
+ 
+<h2>Project:</h2>
+C:\Users\Fubiao.Guo\Desktop\stm32f429demo\SmartBin\MDK-ARM\SmartBin.uvprojx
+Project File Date:  08/06/2019
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'SmartBin'
+compiling app.c...
+..\APP\app.h(18): warning:  #1295-D: Deprecated declaration GSM_HTTP_INIT - give arg types
+  void GSM_HTTP_INIT();
+..\bsp\bsp_rc522.h(151): warning:  #1295-D: Deprecated declaration rc522_find_card - give arg types
+  uint8_t rc522_find_card();
+..\bsp\bsp_gsm800a.h(35): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Public\common_usart.h(23): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\bsp\bsp_print.h(20): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\bsp\md5.h(48): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\bsp\bsp_door.h(7): warning:  #1295-D: Deprecated declaration open_door - give arg types
+  void open_door();
+..\bsp\bsp_door.h(8): warning:  #1295-D: Deprecated declaration close_door - give arg types
+  void close_door();
+..\bsp\bsp_door.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\APP\app.c(108): warning:  #223-D: function "set_time_data" declared implicitly
+  	 set_time_data(gsm_param.ALT_year,gsm_param.ALT_month,
+..\APP\app.c(116): warning:  #223-D: function "get_ntp_time" declared implicitly
+      get_ntp_time(&UsartType3.RX_flag,UsartType3.RX_pData);
+..\APP\app.c(119): warning:  #223-D: function "get_timer" declared implicitly
+        sprintf(Bin_System.timestamp,"%d",get_timer());
+..\APP\app.c(119): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *restrict"
+        sprintf(Bin_System.timestamp,"%d",get_timer());
+..\APP\app.c(137): warning:  #223-D: function "get_timer" declared implicitly
+  	get_timer();
+..\APP\app.c(173): warning:  #167-D: argument of type "char *(*)(char *, char *, char *, char *)" is incompatible with parameter of type "CallbackTemplate"
+  					 if(gsm_post_getinfo(&UsartType3.RX_flag,UsartType3.RX_pData,(char *)Bin_System.appid,(char *)Bin_System.appkey,(char *)Bin_System.account,(char *)Bin_System.timestamp,MD5_data))
+..\APP\app.c(186): warning:  #223-D: function "u6_unpack" declared implicitly
+  		     if(u6_unpack())
+..\APP\app.c(190): warning:  #223-D: function "get_weight_value" declared implicitly
+             get_weight_value(&Bin_System.weight_last);
+..\APP\app.c(198): warning:  #223-D: function "get_weight_command" declared implicitly
+  					 get_weight_command();	 
+..\APP\app.c(199): warning:  #223-D: function "osDelay" declared implicitly
+  					   osDelay(50);
+..\APP\app.c(236): warning:  #223-D: function "u6_unpack" declared implicitly
+  			  if(u6_unpack())
+..\APP\app.c(239): warning:  #223-D: function "get_weight_value" declared implicitly
+             get_weight_value(&Bin_System.weight_end);
+..\APP\app.c(253): warning:  #223-D: function "get_weight_command" declared implicitly
+  					 get_weight_command();	 
+..\APP\app.c(254): warning:  #223-D: function "osDelay" declared implicitly
+  					  osDelay(50);
+..\APP\app.c(268): warning:  #223-D: function "gsm_post_openpsuh" declared implicitly
+  				 if(gsm_post_openpsuh(&UsartType3.RX_flag,UsartType3.RX_pData,(char *)Bin_System.appid,(char *)Bin_System.appkey,(char *)Bin_System.account,(char *)Bin_System.timestamp,MD5_data,
+..\APP\app.c(355): warning:  #167-D: argument of type "char *(*)(char *, char *, char *, char *)" is incompatible with parameter of type "CallbackTemplate"
+  			(char *)Bin_System.appkey,(char *)Bin_System.account,(char *)Bin_System.timestamp,MD5_data);
+..\APP\app.c(386): warning:  #223-D: function "gsm_post_openpsuh" declared implicitly
+  	   	gsm_post_openpsuh(&UsartType3.RX_flag,UsartType3.RX_pData,(char *)Bin_System.appid,
+..\APP\app.c(409): warning:  #223-D: function "send_command" declared implicitly
+              send_command((char *)"AT+HTTPREAD\r\n","+HTTPREAD:",20,Receive_data_flag,rec_buf);
+..\APP\app.c(490): warning:  #223-D: function "gsm_register" declared implicitly
+  	gsm_register(&UsartType3.RX_flag,UsartType3.RX_pData);
+..\APP\app.c(591): warning:  #223-D: function "get_weight_value" declared implicitly
+                get_weight_value(&Bin_System.weight_last);
+..\APP\app.c(598): warning:  #223-D: function "get_weight_command" declared implicitly
+  						  get_weight_command();
+..\APP\app.c(599): warning:  #223-D: function "u6_unpack" declared implicitly
+              u6_unpack(&Bin_System.height_flag);
+..\APP\app.c(607): warning:  #223-D: function "u2_data_memy" declared implicitly
+               u2_data_memy(Bin_System.Qr_code_data,&Bin_System.Qr_code_data_len);
+..\APP\app.c(632): warning:  #223-D: function "print_qr_data" declared implicitly
+  				             print_qr_data(Bin_System.Qr_code_data,Bin_System.Qr_code_data_len);
+..\APP\app.c(636): warning:  #223-D: function "set_tim_flag" declared implicitly
+  												     set_tim_flag(1);
+..\APP\app.c(644): warning:  #223-D: function "get_timout_flag" declared implicitly
+  											   	 get_timout_flag(&Bin_System.door_timout_flag);
+..\APP\app.c(653): warning:  #223-D: function "get_weight_value" declared implicitly
+                                get_weight_value(&Bin_System.weight_end);
+..\APP\app.c(661): warning:  #223-D: function "set_tim_flag" declared implicitly
+                                    set_tim_flag(0);
+..\APP\app.c(675): warning:  #223-D: function "get_weight_command" declared implicitly
+  																		 get_weight_command();
+..\APP\app.c(681): warning:  #223-D: function "set_timout_flag" declared implicitly
+  																set_timout_flag(0);
+..\APP\app.c(682): warning:  #223-D: function "set_tim_flag" declared implicitly
+  														 set_tim_flag(0);
+..\APP\app.c: 40 warnings, 0 errors
+linking...
+Program Size: Code=30068 RO-data=852 RW-data=404 ZI-data=63700  
+FromELF: creating hex file...
+"SmartBin\SmartBin.axf" - 0 Error(s), 40 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F4xx_DFP.2.13.0.pack
+                Keil.STM32F4xx_DFP.2.13.0
+                STMicroelectronics STM32F4 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_SmartBin
+  D:\Users\Fubiao.Guo\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
+
+<h2>Collection of Component Files used:</h2>
+Build Time Elapsed:  00:00:04
+</pre>
+</body>
+</html>

@@ -1,0 +1,14 @@
+smartbin\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/croutine.c
+smartbin\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+smartbin\croutine.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+smartbin\croutine.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+smartbin\croutine.o: ../Inc/FreeRTOSConfig.h
+smartbin\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+smartbin\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+smartbin\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+smartbin\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+smartbin\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+smartbin\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+smartbin\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+smartbin\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/croutine.h
+smartbin\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
