@@ -34,6 +34,7 @@ smartbin\bsp_gsm800a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 smartbin\bsp_gsm800a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 smartbin\bsp_gsm800a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 smartbin\bsp_gsm800a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+smartbin\bsp_gsm800a.o: ..\Public\common_usart.h
 smartbin\bsp_gsm800a.o: ..\bsp\md5.h
 smartbin\bsp_gsm800a.o: ..\bsp\bsp_esp8266.h
 smartbin\bsp_gsm800a.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
@@ -52,4 +53,3 @@ smartbin\bsp_gsm800a.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
 smartbin\bsp_gsm800a.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 smartbin\bsp_gsm800a.o: ../Inc/usart.h
 smartbin\bsp_gsm800a.o: ..\bsp\bsp_print.h
-smartbin\bsp_gsm800a.o: ..\Public\common_usart.h

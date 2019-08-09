@@ -1,7 +1,8 @@
 #include "bsp_weight.h"
 #include "usart.h"
 #include "bsp_print.h"
-
+#include "stdio.h"
+#include "string.h"
 USART_RECEIVETYPE  UsartType6;
 /**
  * @brief calibration weight sensor
@@ -40,9 +41,17 @@ void  get_weight_command()
 	    get_weight_data[index++]=0xA5;
 	 HAL_UART_Transmit(&huart6, (uint8_t*)get_weight_data,index, 0xffff); 
 }
-
-
-
+void get_ad_weight_command()
+{
+	   uint8_t   index=0;
+	    uint8_t   get_weight_data[10]; 
+	    get_weight_data[index++]=0xA1;
+	    get_weight_data[index++]=0;
+	    get_weight_data[index++]=0xA0;
+	    get_weight_data[index++]=0xA2;
+	    get_weight_data[index++]=0xA3;
+	 HAL_UART_Transmit(&huart6, (uint8_t*)get_weight_data,index, 0xffff); 
+}
 
 
 
@@ -86,7 +95,7 @@ void  get_weight_value(uint16_t * state)
 {
 	   if((UsartType6.RX_pData[0]==0xAA)&&(UsartType6.RX_pData[9]==0xff))
 		 {
-			    *state = UsartType6.RX_pData[4]*65536+ UsartType6.RX_pData[5]*256+ UsartType6.RX_pData[6];
+			    *state = (UsartType6.RX_pData[4]*65536+ UsartType6.RX_pData[5]*256+ UsartType6.RX_pData[6])*10;//g
 			 
 		 }
 	   

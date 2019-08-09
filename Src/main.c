@@ -115,7 +115,7 @@ int main(void)
 	 DMA_USART3_IDLE_INIT();
 	 DMA_USART6_IDLE_INIT();
 	 test_rc522_init();
-//	 HAL_Delay(5000);
+//    HAL_Delay(5000);//µÈ´ý4GÄ£°åÎÈ¶¨
 
 //	 gsm_zhuce(&UsartType3.RX_flag,UsartType3.RX_pData);
   /* USER CODE END 2 */
@@ -260,7 +260,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
   /* USER CODE END Callback 1 */
 }
-
 /**
   * @brief  This function is executed in case of error occurrence.
   * @retval None

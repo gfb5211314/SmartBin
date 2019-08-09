@@ -14,7 +14,7 @@
 
 extern UART_HandleTypeDef huart3;
 extern UART_HandleTypeDef huart1;
-volatile USART_RECEIVETYPE  UsartType3;
+USART_RECEIVETYPE  UsartType3;
 
 /*Define print function*/
 

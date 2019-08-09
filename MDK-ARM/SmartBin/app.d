@@ -46,3 +46,15 @@ smartbin\app.o: ../Inc/usart.h
 smartbin\app.o: ..\bsp\md5.h
 smartbin\app.o: ..\bsp\bsp_door.h
 smartbin\app.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+smartbin\app.o: ../Inc/rtc.h
+smartbin\app.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
+smartbin\app.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
+smartbin\app.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+smartbin\app.o: ../Inc/FreeRTOSConfig.h
+smartbin\app.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+smartbin\app.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+smartbin\app.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+smartbin\app.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+smartbin\app.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+smartbin\app.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+smartbin\app.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h

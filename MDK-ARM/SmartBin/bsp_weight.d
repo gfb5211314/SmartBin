@@ -38,3 +38,5 @@ smartbin\bsp_weight.o: ../Inc/usart.h
 smartbin\bsp_weight.o: ../Inc/main.h
 smartbin\bsp_weight.o: ..\bsp\bsp_print.h
 smartbin\bsp_weight.o: ..\Public\common_usart.h
+smartbin\bsp_weight.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+smartbin\bsp_weight.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

@@ -1,5 +1,6 @@
 #include  "bsp_door.h"
 #include "stm32f4xx_hal.h"
+#include "gpio.h"
 
 
 typedef struct{
@@ -15,13 +16,18 @@ door_variate_type door_variate;
 /*********开始计数*********/
 void open_door()
 {
-	
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
 }
 void close_door()
 {
-	
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
 }
-	
+void stop_door()
+{
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5|GPIO_PIN_8, GPIO_PIN_SET);
+}
 
 void door_tim()
 {

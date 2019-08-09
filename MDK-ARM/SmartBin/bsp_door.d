@@ -34,3 +34,5 @@ smartbin\bsp_door.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 smartbin\bsp_door.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 smartbin\bsp_door.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 smartbin\bsp_door.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+smartbin\bsp_door.o: ../Inc/gpio.h
+smartbin\bsp_door.o: ../Inc/main.h

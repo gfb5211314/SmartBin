@@ -3,7 +3,7 @@
 
 #include "stm32f4xx_hal.h"
 
-#define  RX_LEN  2000
+#define  RX_LEN  2048
 typedef struct
 {
     uint8_t  RX_flag;        //IDLE receive flag

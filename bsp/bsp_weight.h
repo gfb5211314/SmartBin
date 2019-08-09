@@ -4,6 +4,6 @@
 #include "stm32f4xx_hal.h"
 
 
-
+void get_ad_weight_command();
 
 #endif

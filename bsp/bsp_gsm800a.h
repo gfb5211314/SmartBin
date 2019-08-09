@@ -2,7 +2,7 @@
 #define  __BSP_GSM800A_H__
 
 #include "stm32f4xx.h"
-
+#include "common_usart.h"
 typedef struct{
 	 uint8_t timestamp[10];
 	 uint8_t * weather_api_path;
@@ -29,7 +29,55 @@ typedef char * (*CallbackTemplate)(char *p,...);
 //uint8_t  gsm_weijing_get_point_param[]="app_id=104501498&account=131010401280001853&encrypt_data=32c5be0c19b705603c72f6bc2e52bddb&timestamp=1564073400";        //积分
 //uint8_t  gsm_context_type[]="AT+HTTPPARA=\"CONTENT\",\"application/x-www-form-urlencoded\"\r\n"; //文本类型
 
-uint8_t gsm_post_get_time(uint8_t *Receive_data_flag,uint8_t *rec_buf);
-uint8_t poll_rec_data(uint8_t *Receive_data_flag,uint8_t *rec_buf);
-uint8_t gsm_post_getinfo(uint8_t *Receive_data_flag, uint8_t *rec_buf,char *appid, char *appkey,char *account,char *timestamp,CallbackTemplate md5function);
+uint8_t gsm_post_get_time(USART_RECEIVETYPE *usart);
+uint8_t poll_rec_data(USART_RECEIVETYPE *usart);
+uint8_t gsm_post_getinfo(USART_RECEIVETYPE *usart,char *appid, char *appkey,char *account,char *timestamp,CallbackTemplate md5function);
+void get_ntp_time(USART_RECEIVETYPE *usart);
+void gsm_register(USART_RECEIVETYPE *usart);
+void gsm_usart_send_byte(uint8_t p);
+ void read_gsm_data(uint8_t *datalen);
+//send string
+void gsm_send_string(uint8_t *p) ;
+
+uint8_t send_command(uint8_t *command,uint8_t *wait_sty,uint8_t wait_time,USART_RECEIVETYPE *usart);
+
+void get_ntp_time(USART_RECEIVETYPE *usart);
+
+void gsm_register(USART_RECEIVETYPE *usart);
+
+
+/**
+ * @brief  get beijing time
+ * @param 形参 参数说明
+ * @param 形参 参数说明
+ * @return 返回说明
+ * @retval 返回值说明
+ */
+
+void gsm_param_time_msg_init();
+
+//     char data_numeb[200];
+uint8_t gsm_post_get_time(USART_RECEIVETYPE *usart);
+
+
+/**
+ * @brief  通过POST 方式发送数据,查询用户信息
+ * @param 形参 参数说明
+ * @param 形参 参数说明
+ * @return 返回说明
+ * @retval 返回值说明
+ */
+
+
+void gsm_param_info_msg_init();
+
+//char data_numeb[200];
+uint8_t gsm_post_getinfo(USART_RECEIVETYPE *usart,char *appid, char *appkey,char *account,char *timestamp,CallbackTemplate md5function);
+
+void gsm_param_push_msg_init();
+
+uint8_t gsm_post_openpsuh(USART_RECEIVETYPE *usart,
+                          char *appid, char *appkey,char *account,char *timestamp,CallbackTemplate md5function,
+                          int type,double height,char *handle_time,char *device_id,char *door_no);
+
 #endif

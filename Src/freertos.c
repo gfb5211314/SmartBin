@@ -108,23 +108,23 @@ osKernelInitialize();
   const osThreadAttr_t comtask_attributes = {
     .name = "comtask",
     .priority = (osPriority_t) osPriorityNormal,
-    .stack_size = 3000
+    .stack_size = 2048
   };
   comtaskHandle = osThreadNew(com_task, NULL, &comtask_attributes);
 
   /* definition and creation of systemtask */
   const osThreadAttr_t systemtask_attributes = {
     .name = "systemtask",
-    .priority = (osPriority_t) osPriorityNormal,
-    .stack_size = 3000
+    .priority = (osPriority_t) osPriorityNormal4,
+    .stack_size = 2048
   };
   systemtaskHandle = osThreadNew(system_task, NULL, &systemtask_attributes);
 
   /* definition and creation of rec_data_task */
   const osThreadAttr_t rec_data_task_attributes = {
     .name = "rec_data_task",
-    .priority = (osPriority_t) osPriorityNormal,
-    .stack_size = 3000
+    .priority = (osPriority_t) osPriorityAboveNormal,
+    .stack_size = 2048
   };
   rec_data_taskHandle = osThreadNew(recdatatask, NULL, &rec_data_task_attributes);
 
@@ -155,7 +155,8 @@ void com_task(void *argument)
   {
     //5秒检测一下是否发送成功
 
-    resend_task();
+
+		
     osDelay(1);
 		
   }
@@ -194,6 +195,7 @@ void system_task(void *argument)
 }
 
 /* USER CODE BEGIN Header_recdatatask */
+extern uint8_t  sendcomd_flag;
 /**
 * @brief Function implementing the rec_data_task thread.
 * @param argument: Not used
@@ -209,9 +211,9 @@ void recdatatask(void *argument)
   for(;;)
   {
 		//放所有接收数据
-	  if(HTTPinit==1)
+	  if(HTTPinit==1&&sendcomd_flag==2)
 		{
-   all_usart_rec_data();
+        all_usart_rec_data();
 		}
 
     osDelay(1);
