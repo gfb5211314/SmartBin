@@ -22,8 +22,10 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "dma.h"
+#include "iwdg.h"
 #include "rtc.h"
 #include "spi.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -31,6 +33,9 @@
 /* USER CODE BEGIN Includes */
 #include "stdio.h"
 #include "bsp_print.h"
+#include "bsp_scaner.h"
+#include "bsp_weight.h"
+#include "bsp_rc522.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -107,6 +112,8 @@ int main(void)
   MX_SPI2_Init();
   MX_UART5_Init();
   MX_UART7_Init();
+  MX_IWDG_Init();
+  MX_TIM6_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -116,7 +123,7 @@ int main(void)
 	 DMA_USART6_IDLE_INIT();
 	 test_rc522_init();
 //    HAL_Delay(5000);//µÈ´ý4GÄ£°åÎÈ¶¨
-
+//HAL_TIM_Base_Start_IT(&htim6);
 //	 gsm_zhuce(&UsartType3.RX_flag,UsartType3.RX_pData);
   /* USER CODE END 2 */
 
@@ -155,9 +162,11 @@ void SystemClock_Config(void)
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
   /** Initializes the CPU, AHB and APB busses clocks 
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE|RCC_OSCILLATORTYPE_LSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE
+                              |RCC_OSCILLATORTYPE_LSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.LSEState = RCC_LSE_ON;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 15;
@@ -234,10 +243,13 @@ static void MX_NVIC_Init(void)
   /* UART5_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(UART5_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(UART5_IRQn);
+  /* TIM6_DAC_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(TIM6_DAC_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);
 }
 
 /* USER CODE BEGIN 4 */
-
+extern uint32_t g_osRuntimeCounter;
 /* USER CODE END 4 */
 
 /**
@@ -257,9 +269,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
+  if (htim->Instance == TIM6) {
 
+     g_osRuntimeCounter ++;
+
+}
   /* USER CODE END Callback 1 */
 }
+
 /**
   * @brief  This function is executed in case of error occurrence.
   * @retval None

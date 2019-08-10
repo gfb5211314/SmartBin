@@ -26,6 +26,7 @@ smartbin\bsp_gsm800a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex
 smartbin\bsp_gsm800a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
 smartbin\bsp_gsm800a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
 smartbin\bsp_gsm800a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
+smartbin\bsp_gsm800a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_iwdg.h
 smartbin\bsp_gsm800a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 smartbin\bsp_gsm800a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 smartbin\bsp_gsm800a.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h
@@ -53,3 +54,4 @@ smartbin\bsp_gsm800a.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
 smartbin\bsp_gsm800a.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 smartbin\bsp_gsm800a.o: ../Inc/usart.h
 smartbin\bsp_gsm800a.o: ..\bsp\bsp_print.h
+smartbin\bsp_gsm800a.o: ..\bsp\bsp_door.h

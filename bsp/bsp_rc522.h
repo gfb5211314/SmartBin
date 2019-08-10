@@ -150,7 +150,7 @@ void ClearBitMask(unsigned char reg,unsigned char mask);
 
 uint8_t rc522_find_card();
 
-
+void test_rc522_init();
 
 #endif 
 

@@ -26,6 +26,7 @@ smartbin\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h
 smartbin\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
 smartbin\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
 smartbin\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
+smartbin\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_iwdg.h
 smartbin\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 smartbin\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 smartbin\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h
@@ -44,10 +45,15 @@ smartbin\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_d
 smartbin\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
 smartbin\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
 smartbin\main.o: ../Inc/dma.h
+smartbin\main.o: ../Inc/iwdg.h
 smartbin\main.o: ../Inc/rtc.h
 smartbin\main.o: ../Inc/spi.h
+smartbin\main.o: ../Inc/tim.h
 smartbin\main.o: ../Inc/usart.h
 smartbin\main.o: ../Inc/gpio.h
 smartbin\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 smartbin\main.o: ..\bsp\bsp_print.h
 smartbin\main.o: ..\Public\common_usart.h
+smartbin\main.o: ..\bsp\bsp_scaner.h
+smartbin\main.o: ..\bsp\bsp_weight.h
+smartbin\main.o: ..\bsp\bsp_rc522.h

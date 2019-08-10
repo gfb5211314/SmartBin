@@ -3,30 +3,24 @@
 #include "gpio.h"
 
 
-typedef struct{
-	  uint16_t tim_count;
-	  uint8_t start_flag;
-	 uint8_t  timout_flag;
-	  uint16_t tim_count_com; //ji shu wan cheng
-	
-}door_variate_type;
+
 
 door_variate_type door_variate;
 
 /*********开始计数*********/
 void open_door()
 {
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOH, GPIO_PIN_14, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOH, GPIO_PIN_15, GPIO_PIN_SET);
 }
 void close_door()
 {
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOH, GPIO_PIN_14, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOH, GPIO_PIN_15, GPIO_PIN_RESET);
 }
 void stop_door()
 {
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5|GPIO_PIN_8, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOH, GPIO_PIN_14|GPIO_PIN_15, GPIO_PIN_SET);
 }
 
 void door_tim()

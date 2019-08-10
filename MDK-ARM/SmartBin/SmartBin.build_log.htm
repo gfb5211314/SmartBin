@@ -21,92 +21,77 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.6.0
 Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
-C:\Users\Fubiao.Guo\Desktop\stm32f429demo\SmartBin - test\MDK-ARM\SmartBin.uvprojx
-Project File Date:  08/06/2019
+C:\Users\Fubiao.Guo\Desktop\stm32f429demo\SmartBin - test -fuben\MDK-ARM\SmartBin.uvprojx
+Project File Date:  08/10/2019
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'SmartBin'
 compiling app.c...
-..\APP\app.h(18): warning:  #1295-D: Deprecated declaration GSM_HTTP_INIT - give arg types
+..\APP\app.h(71): warning:  #1295-D: Deprecated declaration GSM_HTTP_INIT - give arg types
   void GSM_HTTP_INIT();
+..\APP\app.h(76): warning:  #1295-D: Deprecated declaration System_init_param_init - give arg types
+  void System_init_param_init();
+..\APP\app.h(78): warning:  #1295-D: Deprecated declaration timer_update - give arg types
+  void timer_update();
+..\APP\app.h(80): warning:  #1295-D: Deprecated declaration System_ilde_task - give arg types
+  void System_ilde_task();
+..\APP\app.h(82): warning:  #1295-D: Deprecated declaration resend_task - give arg types
+  void resend_task();
+..\APP\app.h(90): warning:  #1295-D: Deprecated declaration all_usart_rec_data - give arg types
+  void all_usart_rec_data();
+..\APP\app.h(92): warning:  #1295-D: Deprecated declaration GSM_HTTP_INIT - give arg types
+  void GSM_HTTP_INIT();
+..\APP\app.h(98): warning:  #1295-D: Deprecated declaration inity - give arg types
+  void inity();
 ..\bsp\bsp_rc522.h(151): warning:  #1295-D: Deprecated declaration rc522_find_card - give arg types
   uint8_t rc522_find_card();
-..\Public\common_usart.h(23): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\bsp\bsp_gsm800a.h(57): warning:  #1295-D: Deprecated declaration gsm_param_time_msg_init - give arg types
-  void gsm_param_time_msg_init();
-..\bsp\bsp_gsm800a.h(72): warning:  #1295-D: Deprecated declaration gsm_param_info_msg_init - give arg types
-  void gsm_param_info_msg_init();
-..\bsp\bsp_gsm800a.h(77): warning:  #1295-D: Deprecated declaration gsm_param_push_msg_init - give arg types
-  void gsm_param_push_msg_init();
+..\bsp\bsp_rc522.h(153): warning:  #1295-D: Deprecated declaration test_rc522_init - give arg types
+  void test_rc522_init();
+..\bsp\bsp_scaner.h(18): warning:  #1295-D: Deprecated declaration test_zhuc - give arg types
+  void test_zhuc();
+..\bsp\bsp_scaner.h(20): warning:  #1295-D: Deprecated declaration test_zhu1c - give arg types
+  void test_zhu1c();
+..\bsp\bsp_scaner.h(22): warning:  #1295-D: Deprecated declaration DMA_USART2_IDLE_INIT - give arg types
+  void DMA_USART2_IDLE_INIT();
 ..\bsp\bsp_gsm800a.h(83): warning:  #1-D: last line of file ends without a newline
   #endif
 ..\bsp\bsp_print.h(20): warning:  #1-D: last line of file ends without a newline
   #endif
 ..\bsp\md5.h(48): warning:  #1-D: last line of file ends without a newline
   #endif
-..\bsp\bsp_door.h(7): warning:  #1295-D: Deprecated declaration open_door - give arg types
-  void open_door();
-..\bsp\bsp_door.h(8): warning:  #1295-D: Deprecated declaration close_door - give arg types
-  void close_door();
-..\bsp\bsp_door.h(16): warning:  #1-D: last line of file ends without a newline
+..\bsp\bsp_door.h(37): warning:  #1-D: last line of file ends without a newline
   #endif
-..\APP\app.c(120): warning:  #223-D: function "set_time_data" declared implicitly
-      set_time_data(gsm_param.ALT_year,gsm_param.ALT_month,
-..\APP\app.c(131): warning:  #223-D: function "get_timer" declared implicitly
+..\bsp\bsp_led.h(28): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\bsp\bsp_weight.h(34): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\bsp\bsp_rtc.h(37): warning:  #1295-D: Deprecated declaration get_timer - give arg types
+  uint32_t get_timer();
+..\APP\app.c(87): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *restrict"
       sprintf(Bin_System.timestamp,"%d",get_timer());
-..\APP\app.c(131): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *restrict"
-      sprintf(Bin_System.timestamp,"%d",get_timer());
-..\APP\app.c(204): warning:  #167-D: argument of type "char *(*)(char *, char *, char *, char *)" is incompatible with parameter of type "CallbackTemplate"
+..\APP\app.c(187): warning:  #167-D: argument of type "char *(*)(char *, char *, char *, char *)" is incompatible with parameter of type "CallbackTemplate"
           if(gsm_post_getinfo(&UsartType3,(char *)Bin_System.appid,(char *)Bin_System.appkey,(char *)Bin_System.account,(char *)Bin_System.timestamp,MD5_data))
-..\APP\app.c(218): warning:  #223-D: function "get_weight_command" declared implicitly
-        			get_weight_command();
-..\APP\app.c(257): warning:  #223-D: function "stop_door" declared implicitly
-  			   stop_door();
-..\APP\app.c(266): warning:  #223-D: function "get_weight_command" declared implicitly
-           		get_weight_command();
-..\APP\app.c(300): warning:  #167-D: argument of type "char *(*)(char *, char *, char *, char *)" is incompatible with parameter of type "CallbackTemplate"
+..\APP\app.c(284): warning:  #223-D: function "close_http" declared implicitly
+  									close_http(&UsartType3);
+..\APP\app.c(298): warning:  #167-D: argument of type "char *(*)(char *, char *, char *, char *)" is incompatible with parameter of type "CallbackTemplate"
           if(gsm_post_openpsuh(&UsartType3,(char *)Bin_System.appid,(char *)Bin_System.appkey,(char *)Bin_System.account,(char *)Bin_System.timestamp,MD5_data,
-..\APP\app.c(301): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *"
-..\APP\app.c(301): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *"
-..\APP\app.c(301): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *"
-..\APP\app.c(338): warning:  #167-D: argument of type "char *(*)(char *, char *, char *, char *)" is incompatible with parameter of type "CallbackTemplate"
+..\APP\app.c(299): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *"
+..\APP\app.c(299): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *"
+..\APP\app.c(299): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *"
+..\APP\app.c(360): warning:  #167-D: argument of type "char *(*)(char *, char *, char *, char *)" is incompatible with parameter of type "CallbackTemplate"
                                (char *)Bin_System.appkey,(char *)Bin_System.account,(char *)Bin_System.timestamp,MD5_data);
-..\APP\app.c(370): warning:  #167-D: argument of type "char *(*)(char *, char *, char *, char *)" is incompatible with parameter of type "CallbackTemplate"
+..\APP\app.c(407): warning:  #167-D: argument of type "char *(*)(char *, char *, char *, char *)" is incompatible with parameter of type "CallbackTemplate"
                                 (char *)Bin_System.appkey,(char *)Bin_System.account,(char *)gsm_param.timestamp,MD5_data,
-..\APP\app.c(371): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *"
-..\APP\app.c(371): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *"
-..\APP\app.c(371): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *"
-..\APP\app.c(560): warning:  #223-D: function "get_weight_value" declared implicitly
-              get_weight_value(&Bin_System.weight_last);
-..\APP\app.c(567): warning:  #223-D: function "get_weight_command" declared implicitly
-              get_weight_command();
-..\APP\app.c(568): warning:  #223-D: function "u6_unpack" declared implicitly
-              u6_unpack(&Bin_System.height_flag);
-..\APP\app.c(576): warning:  #223-D: function "u2_data_memy" declared implicitly
-              u2_data_memy(Bin_System.Qr_code_data,&Bin_System.Qr_code_data_len);
-..\APP\app.c(601): warning:  #223-D: function "print_qr_data" declared implicitly
-              print_qr_data(Bin_System.Qr_code_data,Bin_System.Qr_code_data_len);
-..\APP\app.c(605): warning:  #223-D: function "set_tim_flag" declared implicitly
-              set_tim_flag(1);
-..\APP\app.c(613): warning:  #223-D: function "get_timout_flag" declared implicitly
-              get_timout_flag(&Bin_System.door_timout_flag);
-..\APP\app.c(622): warning:  #223-D: function "get_weight_value" declared implicitly
-                      get_weight_value(&Bin_System.weight_end);
-..\APP\app.c(630): warning:  #223-D: function "set_tim_flag" declared implicitly
-                          set_tim_flag(0);
-..\APP\app.c(644): warning:  #223-D: function "get_weight_command" declared implicitly
-                      get_weight_command();
-..\APP\app.c(650): warning:  #223-D: function "set_timout_flag" declared implicitly
-                  set_timout_flag(0);
-..\APP\app.c(651): warning:  #223-D: function "set_tim_flag" declared implicitly
-                  set_tim_flag(0);
-..\APP\app.c: 40 warnings, 0 errors
+..\APP\app.c(491): warning:  #223-D: function "close_http" declared implicitly
+  									close_http(usart);
+..\APP\app.c(503): warning:  #223-D: function "close_http" declared implicitly
+                       		close_http(usart);
+..\APP\app.c: 31 warnings, 0 errors
 linking...
-Program Size: Code=30020 RO-data=772 RW-data=456 ZI-data=71168  
+Program Size: Code=31576 RO-data=900 RW-data=492 ZI-data=71772  
 FromELF: creating hex file...
-"SmartBin\SmartBin.axf" - 0 Error(s), 40 Warning(s).
+"SmartBin\SmartBin.axf" - 0 Error(s), 31 Warning(s).
 
 <h2>Software Packages used:</h2>
 

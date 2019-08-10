@@ -26,6 +26,7 @@ smartbin\app.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h
 smartbin\app.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
 smartbin\app.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
 smartbin\app.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
+smartbin\app.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_iwdg.h
 smartbin\app.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 smartbin\app.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 smartbin\app.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h
@@ -34,13 +35,13 @@ smartbin\app.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 smartbin\app.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 smartbin\app.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 smartbin\app.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+smartbin\app.o: ..\Public\common_usart.h
 smartbin\app.o: ..\APP\api_interface.h
 smartbin\app.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 smartbin\app.o: ..\bsp\bsp_rc522.h
 smartbin\app.o: ../Inc/main.h
 smartbin\app.o: ..\bsp\bsp_scaner.h
 smartbin\app.o: ..\bsp\bsp_gsm800a.h
-smartbin\app.o: ..\Public\common_usart.h
 smartbin\app.o: ..\bsp\bsp_print.h
 smartbin\app.o: ../Inc/usart.h
 smartbin\app.o: ..\bsp\md5.h
@@ -58,3 +59,6 @@ smartbin\app.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4
 smartbin\app.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
 smartbin\app.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 smartbin\app.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+smartbin\app.o: ..\bsp\bsp_led.h
+smartbin\app.o: ..\bsp\bsp_weight.h
+smartbin\app.o: ..\bsp\bsp_rtc.h

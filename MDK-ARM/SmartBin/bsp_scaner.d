@@ -26,6 +26,7 @@ smartbin\bsp_scaner.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.
 smartbin\bsp_scaner.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
 smartbin\bsp_scaner.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
 smartbin\bsp_scaner.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
+smartbin\bsp_scaner.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_iwdg.h
 smartbin\bsp_scaner.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 smartbin\bsp_scaner.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 smartbin\bsp_scaner.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h
@@ -43,3 +44,4 @@ smartbin\bsp_scaner.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 smartbin\bsp_scaner.o: ..\bsp\bsp_print.h
 smartbin\bsp_scaner.o: ..\Public\common_usart.h
 smartbin\bsp_scaner.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+smartbin\bsp_scaner.o: ..\bsp\bsp_esp8266.h

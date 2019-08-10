@@ -91,7 +91,7 @@ uint8_t  u6_unpack()  //不能定义 uint8_t state  ，否则传不了参数
 	
 }
 /***get  g**************/
-void  get_weight_value(uint16_t * state)
+void  get_weight_value(uint32_t * state)
 {
 	   if((UsartType6.RX_pData[0]==0xAA)&&(UsartType6.RX_pData[9]==0xff))
 		 {

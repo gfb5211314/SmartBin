@@ -32,6 +32,7 @@
 #include "bsp_gsm800a.h"
 #include "md5.h"
 #include "app.h"
+#include "iwdg.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -64,17 +65,38 @@ int fputc(int ch, FILE* f)
 osThreadId_t comtaskHandle;
 osThreadId_t systemtaskHandle;
 osThreadId_t rec_data_taskHandle;
+osThreadId_t sensortaskHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
-   
+uint32_t g_osRuntimeCounter = 0;
+
+
 /* USER CODE END FunctionPrototypes */
 
 void com_task(void *argument);
 void system_task(void *argument);
 void recdatatask(void *argument);
+void sensor_task(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
+
+/* Hook prototypes */
+void configureTimerForRunTimeStats(void);
+unsigned long getRunTimeCounterValue(void);
+
+/* USER CODE BEGIN 1 */
+/* Functions needed when configGENERATE_RUN_TIME_STATS is on */
+__weak void configureTimerForRunTimeStats(void)
+{
+       g_osRuntimeCounter = 0;
+}
+
+__weak unsigned long getRunTimeCounterValue(void)
+{
+   return g_osRuntimeCounter;
+}
+/* USER CODE END 1 */
 
 /**
   * @brief  FreeRTOS initialization
@@ -83,24 +105,24 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
   */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
-       
+
   /* USER CODE END Init */
 osKernelInitialize();
 
   /* USER CODE BEGIN RTOS_MUTEX */
-  /* add mutexes, ... */
+    /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
-  /* add semaphores, ... */
+    /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
-  /* start timers, add new ones, ... */
+    /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
-  /* add queues, ... */
+    /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
@@ -108,7 +130,7 @@ osKernelInitialize();
   const osThreadAttr_t comtask_attributes = {
     .name = "comtask",
     .priority = (osPriority_t) osPriorityNormal,
-    .stack_size = 2048
+    .stack_size = 3000
   };
   comtaskHandle = osThreadNew(com_task, NULL, &comtask_attributes);
 
@@ -116,7 +138,7 @@ osKernelInitialize();
   const osThreadAttr_t systemtask_attributes = {
     .name = "systemtask",
     .priority = (osPriority_t) osPriorityNormal4,
-    .stack_size = 2048
+    .stack_size = 3000
   };
   systemtaskHandle = osThreadNew(system_task, NULL, &systemtask_attributes);
 
@@ -124,20 +146,29 @@ osKernelInitialize();
   const osThreadAttr_t rec_data_task_attributes = {
     .name = "rec_data_task",
     .priority = (osPriority_t) osPriorityAboveNormal,
-    .stack_size = 2048
+    .stack_size = 3000
   };
   rec_data_taskHandle = osThreadNew(recdatatask, NULL, &rec_data_task_attributes);
 
+  /* definition and creation of sensortask */
+  const osThreadAttr_t sensortask_attributes = {
+    .name = "sensortask",
+    .priority = (osPriority_t) osPriorityNormal,
+    .stack_size = 2048
+  };
+  sensortaskHandle = osThreadNew(sensor_task, NULL, &sensortask_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
+    /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
 
 }
 
 /* USER CODE BEGIN Header_com_task */
+
 /**
   * @brief  Function implementing the comtask thread.
-  * @param  argument: Not used 
+  * @param  argument: Not used
   * @retval None
   */
 
@@ -146,20 +177,31 @@ void com_task(void *argument)
 {
     
     
+    
+    
+//    char g_tasks_buf[512]; //用于存放显示数据
+
   /* USER CODE BEGIN com_task */
-	    
+
 //    	 uint8_t pcWriteBuffer[500];
 
-  /* Infinite loop */
-  for(;;)
-  {
-    //5秒检测一下是否发送成功
+    /* Infinite loop */
+    for(;;)
+    {
+        //5秒检测一下是否发送成功
+//             printf("com_task\n");
+//            vTaskList((char *)&g_tasks_buf);
+//            printf("任务名                任务状态 优先级   剩余栈 任务序号\r\n");
+//            printf("%s\r\n", g_tasks_buf);    
+//            vTaskGetRunTimeStats((char *)&g_tasks_buf);
+//            printf("\r\n任务名            运行计数         使用率\r\n");
+//            printf("%s\r\n", g_tasks_buf);    
+// 
 
+        resend_task();
+        osDelay(1);
 
-		
-    osDelay(1);
-		
-  }
+    }
   /* USER CODE END com_task */
 }
 
@@ -174,23 +216,31 @@ uint8_t HTTPinit=0;
 void system_task(void *argument)
 {
   /* USER CODE BEGIN system_task */
-     uint8_t a;
+    uint8_t a;
+//char g_tasks_buf[512]; //用于存放显示数据
+    /* Infinite loop */
+    for(;;)
+    {
+//			   printf("system_task\n");
+//            vTaskList((char *)&g_tasks_buf);
+//            printf("任务名               任务状态 优先级   剩余栈 任务序号\r\n");
+//            printf("%s\r\n", g_tasks_buf);    
 
-  /* Infinite loop */
-  for(;;)
-  {
-     if(HTTPinit==0)
-		 {
-	
-			 printf("nihao");
-   	 GSM_HTTP_INIT();
-			System_init_param_init();
-			 HTTPinit=1;
-		 }
-   System_ilde_task();
+//            vTaskGetRunTimeStats((char *)&g_tasks_buf);
+//            printf("\r\n任务名           运行计数         使用率\r\n");
+//            printf("%s\r\n", g_tasks_buf);   
+        if(HTTPinit==0)
+        {
 
-    osDelay(1);
-  }
+            printf("nihao");
+            GSM_HTTP_INIT();
+            System_init_param_init();
+            HTTPinit=1;
+        }
+        System_ilde_task();
+
+        osDelay(1);
+    }
   /* USER CODE END system_task */
 }
 
@@ -204,26 +254,61 @@ extern uint8_t  sendcomd_flag;
 /* USER CODE END Header_recdatatask */
 void recdatatask(void *argument)
 {
-
   /* USER CODE BEGIN recdatatask */
+//char g_tasks_buf[512]; //用于存放显示数据
+    /* Infinite loop */
+    for(;;)
+    {
+//			   printf("recdatatask\n");
+//            vTaskList((char *)&g_tasks_buf);
+//            printf("任务名              任务状态 优先级   剩余栈 任务序号\r\n");
+//            printf("%s\r\n", g_tasks_buf);    
 
+//            vTaskGetRunTimeStats((char *)&g_tasks_buf);
+//            printf("\r\n任务名          运行计数         使用率\r\n");
+//            printf("%s\r\n", g_tasks_buf);   
+        IWDG_Feed();
+        //放所有接收数据
+        if(HTTPinit==1&&sendcomd_flag==2)
+        {
+            all_usart_rec_data();
+        }
+
+        osDelay(1);
+    }
+  /* USER CODE END recdatatask */
+}
+
+/* USER CODE BEGIN Header_sensor_task */
+/**
+* @brief Function implementing the sensortask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_sensor_task */
+void sensor_task(void *argument)
+{
+  /* USER CODE BEGIN sensor_task */
+//	char g_tasks_buf[512]; //用于存放显示数据
   /* Infinite loop */
   for(;;)
   {
-		//放所有接收数据
-	  if(HTTPinit==1&&sendcomd_flag==2)
-		{
-        all_usart_rec_data();
-		}
+//		     printf("sensor_task\n");
+//            vTaskList((char *)&g_tasks_buf);
+//            printf("任务名                任务状态 优先级   剩余栈 任务序号\r\n");
+//            printf("%s\r\n", g_tasks_buf);    
 
+//            vTaskGetRunTimeStats((char *)&g_tasks_buf);
+//            printf("\r\n任务名            运行计数         使用率\r\n");
+//            printf("%s\r\n", g_tasks_buf);   
     osDelay(1);
   }
-  /* USER CODE END recdatatask */
+  /* USER CODE END sensor_task */
 }
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
-     
+
 /* USER CODE END Application */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

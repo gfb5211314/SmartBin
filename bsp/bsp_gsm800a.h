@@ -54,7 +54,7 @@ void gsm_register(USART_RECEIVETYPE *usart);
  * @retval 返回值说明
  */
 
-void gsm_param_time_msg_init();
+void gsm_param_time_msg_init(void);
 
 //     char data_numeb[200];
 uint8_t gsm_post_get_time(USART_RECEIVETYPE *usart);
@@ -69,12 +69,12 @@ uint8_t gsm_post_get_time(USART_RECEIVETYPE *usart);
  */
 
 
-void gsm_param_info_msg_init();
+void gsm_param_info_msg_init(void);
 
 //char data_numeb[200];
 uint8_t gsm_post_getinfo(USART_RECEIVETYPE *usart,char *appid, char *appkey,char *account,char *timestamp,CallbackTemplate md5function);
 
-void gsm_param_push_msg_init();
+void gsm_param_push_msg_init(void);
 
 uint8_t gsm_post_openpsuh(USART_RECEIVETYPE *usart,
                           char *appid, char *appkey,char *account,char *timestamp,CallbackTemplate md5function,

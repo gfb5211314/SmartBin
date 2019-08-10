@@ -32,4 +32,28 @@ void send_byte(uint8_t p);
 void esp_8266_connect_web(esp8266_state_type esp8266_state ,uint8_t Receive_data_flag,uint8_t *rec_buf);
 void get_data_web_post( double weight,uint8_t category,char *appid, char *appkey,char *account,char *timestamp,CallbackTemplate md5function);
 
+
+
+
+
+
+//send string
+void send_string(uint8_t *p) ;
+void test();
+
+void get_beijing_tim();
+
+/**
+* @brief 
+ * @param 形参 参数说明
+ * @param 形参 参数说明
+ * @return 返回说明
+ * @retval 返回值说明
+ */
+
+void get_data_web_post( double weight,uint8_t category,char *appid, char *appkey,char *account,char *timestamp,CallbackTemplate md5function);
+
+void poll_data_web(uint8_t Receive_data_flag,uint8_t *rec_buf,uint8_t *states);
+
+
 #endif

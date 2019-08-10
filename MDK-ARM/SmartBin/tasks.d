@@ -14,3 +14,4 @@ smartbin\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 smartbin\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
 smartbin\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 smartbin\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/stack_macros.h
+smartbin\tasks.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

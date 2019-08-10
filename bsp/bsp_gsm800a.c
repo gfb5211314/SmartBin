@@ -10,15 +10,17 @@
 #include "cmsis_os.h"
 #include "usart.h"
 #include "bsp_print.h"
+#include "bsp_door.h"
 //  AT+HTTPPARA="URL","api.k780.com:88/"
 #define   GSM_USART           &huart3
-#define Wait_time   osDelay(50);
+#define Wait_time   osDelay(100);
 
 //驱动指令
 
 uint8_t AT_SAPBR_1[]="AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\"\r\n";
 uint8_t AT_SAPBR_2[]="AT+SAPBR=3,1,\"APN\",\"CMNET\"\r\n";
-uint8_t AT_SAPBR_3[]="AT+SAPBR=1,1\r\n";
+uint8_t AT_SAPBR_3[]="AT+SAPBR=1,1\r\n";  //打开
+uint8_t AT_SAPBR_4[]="AT+SAPBR=0,1\r\n"; //关闭
 uint8_t AT_HTTPINIT[]="AT+HTTPINIT\r\n";
 uint8_t AT_HTTPPARA[]="AT+HTTPPARA=\"CID\",1\r\n";
 //关掉HTTP
@@ -123,7 +125,7 @@ uint8_t send_command(uint8_t *command,uint8_t *wait_sty,uint8_t wait_time,USART_
         Wait_time;
         if(usart->RX_flag)
         {
-//   		      printf("%s",    usart->RX_pData );
+//	      printf("%s",    usart->RX_pData );
 //					  printf("wait_tim_count=%d",wait_tim_count);
             if(strstr((const char*)usart->RX_pData,(const char*)wait_sty))
             {
@@ -205,7 +207,10 @@ void gsm_register(USART_RECEIVETYPE *usart)
     //send_command("AT+RST\r\n","OK",5,Receive_data_flag,rec_buf);
 
 //    send_command("AT\r\n",(uint8_t *)"OK",200,usart);
-
+       yellow_led_close();
+	     	 red_led_close();
+	      green_led_close();
+	  send_command("AT+CSQ\r\n",(uint8_t *)"OK",200,usart);
     send_command(AT_CREG,(uint8_t *)"0,1",200,usart);
     send_command(AT_CGREG,(uint8_t *)"0,1",200,usart);
     send_command(AT_CGATT,(uint8_t *)"1",200,usart);
@@ -214,7 +219,17 @@ void gsm_register(USART_RECEIVETYPE *usart)
     send_command(AT_SAPBR_2,(uint8_t *)"OK",200,usart);
     send_command(AT_SAPBR_3,(uint8_t *)"OK",200,usart);
     get_ntp_time(usart);
-    send_command(AT_HTTPINIT,(uint8_t *)"OK",200,usart);
+    if(send_command(AT_HTTPINIT,(uint8_t *)"OK",200,usart))
+		{
+			  yellow_led_open();
+		  	 red_led_close();
+				 yellow_led_close();
+		}
+		else
+		{ 
+		    yellow_led_open();
+				 red_led_open();
+		}
     send_command(AT_HTTPPARA,(uint8_t *)"OK",200,usart);
 }
 
@@ -241,6 +256,11 @@ uint8_t gsm_post_get_time(USART_RECEIVETYPE *usart)
     uint8_t state;
     char data_numeb[200];
     gsm_param_time_msg_init();
+	   send_command(AT_SAPBR_1,(uint8_t *)"OK",200,usart);
+     send_command(AT_SAPBR_2,(uint8_t *)"OK",200,usart);
+     send_command(AT_SAPBR_3,(uint8_t *)"OK",200,usart);
+	   send_command(AT_HTTPINIT,(uint8_t *)"OK",200,usart);
+	   send_command(AT_HTTPPARA,(uint8_t *)"OK",200,usart);
     //first step 发送域名PATH
     if(send_command(gsm_param.weather_api_path,(uint8_t *)"OK",5,usart))
     {
@@ -313,14 +333,18 @@ uint8_t gsm_post_getinfo(USART_RECEIVETYPE *usart,char *appid, char *appkey,char
     uint16_t data_len;
     char data_numeb[200];
     gsm_param_info_msg_init();
-
+    
     encrypt_data=md5function(appid, appkey,account,timestamp);
 //          printf("encrypt_data=%s",(char*)encrypt_data);
     sprintf ((char*)gsm_param.get_info_api_param,"app_id=%s&account=%s&encrypt_data=%s&timestamp=%s",appid,account,encrypt_data,timestamp); //
 //          data_len=strlen((const char *)gsm_param.get_info_api_param);
 //	printf("gsm_param.get_info_api_param=%s\r\n",gsm_param.get_info_api_param);
 //  printf("len=%d\r\n",strlen((const char *)gsm_param.get_info_api_param));
-
+     send_command(AT_SAPBR_1,(uint8_t *)"OK",200,usart);
+     send_command(AT_SAPBR_2,(uint8_t *)"OK",200,usart);
+     send_command(AT_SAPBR_3,(uint8_t *)"OK",200,usart);
+	   send_command(AT_HTTPINIT,(uint8_t *)"OK",200,usart);
+	   send_command(AT_HTTPPARA,(uint8_t *)"OK",200,usart);
     //first step 发送域名PATH
     if(send_command(gsm_param.get_info_api_path,(uint8_t *)"OK",5,usart))
     {
@@ -367,6 +391,13 @@ uint8_t gsm_post_getinfo(USART_RECEIVETYPE *usart,char *appid, char *appkey,char
         return  0;
     }
     //等待数据返回
+}
+void close_http(USART_RECEIVETYPE *usart)
+{
+	send_command(AT_HTTPTERM,(uint8_t *)"OK",200,usart);//关闭网络	AT_HTTPTERM
+	send_command(AT_SAPBR_4,(uint8_t *)"OK",200,usart);//关闭网络
+	
+	
 }
 void gsm_param_push_msg_init()
 {

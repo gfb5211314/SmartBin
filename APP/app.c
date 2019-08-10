@@ -29,58 +29,12 @@
 #include "cmsis_os.h"
 #include "task.h"
 #include "FreeRTOS.h"
+#include "bsp_led.h"
+#include "bsp_weight.h"
+#include "bsp_rtc.h"
+#define  open_over_weight  0    //0 代表超重，业务正常执行   1 超重，业务不执行 
 //#define   open_rtc   0
-typedef struct {
-    /***系统全部状态*************/
-    uint8_t Card_Check;     //卡片校验状态
-    uint8_t Qr_code_check;  //二维码校验状态
-    uint8_t print_status;  //打印机完成状态
-    uint8_t print_paper;       //容量状态
-    uint8_t Mechanical_key;  //机械按键状态
-    uint8_t Touch_key;       //触摸屏按键状态
-    /*******系统调用数据**************/
-    /*******填充CODE******************/
-    uint8_t Qr_code_data[100]; //二维码数据
-    uint16_t Qr_code_data_len;
-    uint8_t account[100];
 
-    uint8_t Card_data[100];    //卡片数据
-    uint16_t weight_data;       //重量
-    uint8_t  web_data[100];     //后台数据
-    uint8_t   timestamp[100];
-    uint32_t   timestamp_rtc;
-    /***********************************/
-    uint8_t Qr_code_data_flag;    //检测是否有数据
-    uint8_t web_data_flag;    //检测是否有数据
-    uint8_t door_flag;    //检测men
-    uint8_t height_flag;    //检测men
-    uint8_t print_state_flag;
-    uint8_t tim_count_flag;
-    uint16_t weight_last;
-    uint16_t weight_end;
-    uint8_t door_timout_flag;
-    uint8_t api_get_tim_flag;
-    uint8_t api_get_info_flag;
-    uint8_t user_msg_flag;
-    uint8_t door_open_tim_flag;
-    uint16_t door_open_tim_count;
-    uint8_t *appid;
-    uint8_t *appkey;
-    uint8_t type;
-    double height;
-    uint8_t handle_time[30];
-    uint8_t *device_id;
-    uint8_t *door_no;
-    uint8_t get_tmie_sucess;
-    uint8_t open_push_sucess;
-		uint32_t weight_ad_last;
-		uint32_t weight_ad_end;
-		uint32_t weight_last_tim_count;
-		uint32_t weight_end_tim_count;
-		uint32_t weight_tim_out;
-    /*************函数*********************/
-
-} Bin_System_Type;
 
 typedef struct {
     uint8_t	 get_card_qr_flag;
@@ -90,6 +44,8 @@ typedef struct {
     uint8_t   open_door_flag;
     uint8_t   start_time_flag;
     uint8_t   open_push_flag;
+	  uint8_t   overweight_flag;
+
 } Bin_System_task_Type;
 Bin_System_task_Type  Bin_System_task;
 extern USART_RECEIVETYPE  UsartType3;
@@ -132,8 +88,12 @@ void timer_update()
     printf("Bin_System.handle_time=%s\r\n",Bin_System.handle_time);
     printf("Bin_System.timestamp=%s\r\n",Bin_System.timestamp);
 }
+
+	
 void System_ilde_task()
-{   
+{    
+
+    	
 	   if(Bin_System_task.get_card_qr_flag==1)
 		 {
 			 UsartType2.RX_flag=0;
@@ -164,14 +124,37 @@ void System_ilde_task()
         }
         else
         {
-//      					   get_timer();
+    					   get_timer();
             memset(Bin_System.account, 0, sizeof(Bin_System.account));
-
+           	get_weight_command();
+					  osDelay(50);
+					  usart6_weight_rec_data(&UsartType6,&Bin_System.weight_over,&Bin_System.weight_ad_last);
+					   if((Bin_System.weight_over/1000)>60)
+						 {
+							 Bin_System_task.overweight_flag=1;
+							 
+						 }
+						 else
+						 {
+							  Bin_System_task.overweight_flag=0;
+							 
+						 }
+					
         }
     }
+	if(	Bin_System_task.overweight_flag==1)
+	{
+		 HAL_GPIO_WritePin(GPIOH, GPIO_PIN_13, GPIO_PIN_SET);
+						   osDelay(100);
+					   HAL_GPIO_WritePin(GPIOH, GPIO_PIN_13, GPIO_PIN_RESET);
+					     osDelay(100);
+					    HAL_GPIO_WritePin(GPIOH, GPIO_PIN_13, GPIO_PIN_SET);
+					   osDelay(100);
+						  HAL_GPIO_WritePin(GPIOH, GPIO_PIN_13, GPIO_PIN_RESET);
 		
+	}
     //获取时间任务完成
-     else if(Bin_System_task.get_time_flag==1)
+   if(Bin_System_task.get_time_flag==1)
     {
 
 #ifdef  open_rtc
@@ -221,14 +204,27 @@ void System_ilde_task()
 			     if( Bin_System.weight_last_tim_count>100)
 					 {
 			 printf("Bin_System.weight_last=%d\r\n",(Bin_System.weight_last));
-						   Bin_System.weight_last_tim_count=0;
-					 Bin_System_task.get_last_height_flag=2;
+						 //大于60KG 
+						 if((Bin_System.weight_last/1000)>60)
+						 {
+							Bin_System_task.overweight_flag=0; 			 
+						 }
+						   if(open_over_weight)
+							 {
+			     	
+							 }
+							 else
+							 {
+								   Bin_System.weight_last_tim_count=0;
+					        Bin_System_task.get_last_height_flag=2;	
+							 }
 					 }
 				
 
     }
+	
     //用户正确
-    else if((Bin_System_task.get_info_flag==3)&&(Bin_System_task.get_last_height_flag==2))
+   if((Bin_System_task.get_info_flag==3)&&(Bin_System_task.get_last_height_flag==2))
     {
         printf("user is sucess\r\n");
         Bin_System_task.get_info_flag=0;
@@ -257,7 +253,7 @@ void System_ilde_task()
 			   stop_door();
        osDelay(15000);
         close_door();
-			 osDelay(12000);
+			 osDelay(15000);
         stop_door();
 			  Bin_System_task.start_time_flag=1;
     }
@@ -272,7 +268,7 @@ void System_ilde_task()
 							if((Bin_System.weight_end-Bin_System.weight_last)>30)
 							{
 						
-								Bin_System.height=Bin_System.weight_end-Bin_System.weight_last;
+								Bin_System.height=Bin_System.weight_end+Bin_System.weight_last;
 							  Bin_System.height=Bin_System.height/1000; //G转为KG
                 printf("已经丢垃圾\r\n");
                 Bin_System_task.start_time_flag=0;
@@ -284,6 +280,8 @@ void System_ilde_task()
 							{
 								   printf("用户没丢垃圾\r\n");
 								  Bin_System_task.get_card_qr_flag=0;
+								   Bin_System_task.start_time_flag=0;
+									close_http(&UsartType3);
 								
 							}
 				 }
@@ -313,33 +311,58 @@ void System_ilde_task()
         Bin_System_task.open_push_flag=0;
         Bin_System_task.get_card_qr_flag=0;
 					Bin_System.weight_end=0;
-							Bin_System.weight_last=0;
+			  	Bin_System.weight_last=0;
 			
     }
-
+    
 }
 uint16_t test1_cont=0;
 uint16_t test2_cont=0;
 uint16_t test3_cont=0;
+
+uint16_t test1_recont=0;
+uint16_t test2_recont=0;
+uint16_t test3_recont=0;
+
+void  hefg()
+{
+	 
+}
 //任务重发 5秒重发
 void resend_task()
 {
+		
 
-
+	
     if(Bin_System_task.get_info_flag==2)
     {
         test1_cont++;
         if(test1_cont>5000)
         {
+					test1_recont++;
+					 if(test1_recont>5)
+					 {
+				    	test1_recont=0;
+               Bin_System_task.get_card_qr_flag=0;
+					    Bin_System.weight_end=0;
+							Bin_System.weight_last=0;
+						 Bin_System_task.get_info_flag=0;
+						  	 red_led_open();
+						     yellow_led_open();
+						     green_led_close();
+						   	 
+						 
+					 }
             test1_cont=0;
             printf("5miao send user jiaonian \r\n");
-//            GSM_HTTP_INIT();
+            GSM_HTTP_INIT();
             gsm_post_getinfo(&UsartType3,(char *)Bin_System.appid,
                              (char *)Bin_System.appkey,(char *)Bin_System.account,(char *)Bin_System.timestamp,MD5_data);
         }
     }
     else
     {
+			test1_recont=0;
         test1_cont=0;
 
     }
@@ -350,7 +373,7 @@ void resend_task()
         {
             test2_cont=0;
             printf("5秒重发TIME\r\n");
-//            GSM_HTTP_INIT();
+            GSM_HTTP_INIT();
             gsm_post_get_time(&UsartType3);
         }
     }
@@ -365,14 +388,29 @@ void resend_task()
         if(test3_cont>5000)
         {
             test3_cont=0;
-//            GSM_HTTP_INIT();
+            GSM_HTTP_INIT();
+										test3_recont++;
+					 if(test1_recont>5)
+					 {
+				    	test1_recont=0;
+               Bin_System_task.get_card_qr_flag=0;
+					    Bin_System.weight_end=0;
+							Bin_System.weight_last=0;
+						 Bin_System_task.get_info_flag=0;
+						  	 red_led_open();
+						     yellow_led_open();
+						     green_led_close();
+						   	 
+						 
+					 }
             gsm_post_openpsuh(&UsartType3,(char *)Bin_System.appid,
                               (char *)Bin_System.appkey,(char *)Bin_System.account,(char *)gsm_param.timestamp,MD5_data,
-                              1,Bin_System.height,Bin_System.handle_time,Bin_System.device_id,Bin_System.door_no);
+                              1,Bin_System.height,(char*)Bin_System.handle_time,(char*)Bin_System.device_id,(char*)Bin_System.door_no);
         }
     }
     else
-    {
+    {	
+			 test3_recont=0;
         test3_cont=0;
     }
 
@@ -450,6 +488,7 @@ void poll_GSM_rec_data(USART_RECEIVETYPE *usart)
                     printf("USER is no valid\r\n");
                     usart->RX_flag=0;
                     memset(usart->RX_pData, 0, usart->RX_Size);
+									close_http(usart);
                 }
               
              }
@@ -461,7 +500,7 @@ void poll_GSM_rec_data(USART_RECEIVETYPE *usart)
                 if(strstr((const char*)usart->RX_pData,(const char*)"Success"))
                 {
                     Bin_System_task.open_push_flag=3;
-
+                     		close_http(usart);
                     printf("PUSH is valid\r\n");
                     memset(usart->RX_pData, 0,  usart->RX_Size);
                     usart->RX_flag=0;
@@ -481,7 +520,7 @@ void poll_GSM_rec_data(USART_RECEIVETYPE *usart)
 
 
 
-void usart6_weight_rec_data(USART_RECEIVETYPE *usartxx,uint16_t *state,uint32_t *ad_data)
+void usart6_weight_rec_data(USART_RECEIVETYPE *usartxx,uint32_t *state,uint32_t *ad_data)
 {
 	     uint16_t check_1,check_2;
 	  
@@ -516,7 +555,7 @@ void usart6_weight_rec_data(USART_RECEIVETYPE *usartxx,uint16_t *state,uint32_t 
 
 void all_usart_rec_data()
 {
-    poll_GSM_rec_data(&UsartType3);
+      poll_GSM_rec_data(&UsartType3);
 	      if(Bin_System_task.get_last_height_flag==1)
 				{
         usart6_weight_rec_data(&UsartType6,&Bin_System.weight_last,&Bin_System.weight_ad_last);
@@ -525,6 +564,15 @@ void all_usart_rec_data()
 				{
         usart6_weight_rec_data(&UsartType6,&Bin_System.weight_end,&Bin_System.weight_ad_last);
 				}
+				  
+//				 if(Bin_System_task.overweight_flag==1)
+//				 {
+//					   usart6_weight_rec_data(&UsartType6,&Bin_System.weight_over,&Bin_System.weight_ad_last);
+//					     
+//					    printf("Bin_System.weight_over=%d\r\n",Bin_System.weight_over);
+//				 }
+
+      
 				
 }
 void GSM_HTTP_INIT()
@@ -543,128 +591,6 @@ void inity()
     Qr_code_state=Qr_code_idle;
 }
 
-void system_demo()
-{
-
-
-
-    switch (Qr_code_state)
-    {
-
-
-    case Qr_code_idle :
-//获取称重状态
-        if(Bin_System.height_flag)
-        {
-            Bin_System.height_flag=0;
-            get_weight_value(&Bin_System.weight_last);
-            printf("未丢垃圾的重量为:%d克\r\n",Bin_System.weight_last);
-
-        }
-        else
-        {
-            //检测数据是否有数据
-            get_weight_command();
-            u6_unpack(&Bin_System.height_flag);
-//						printf("Bin_System.height_flag=%d",Bin_System.height_flag);
-
-        }
-        if(Bin_System.Qr_code_data_flag)
-        {
-            printf("获取到用户二维码信息\r\n");
-            Bin_System.Qr_code_data_flag=0;
-            u2_data_memy(Bin_System.Qr_code_data,&Bin_System.Qr_code_data_len);
-//					  printf("Bin_System.Qr_code_data=%s",Bin_System.Qr_code_data);
-
-            //获取为丢垃圾的重量
-
-            Bin_System.print_state_flag=0;
-            Qr_code_state=Qr_code_busy;
-        }
-        else
-        {
-
-//            u2_unpack(&Bin_System.Qr_code_data_flag);
-//					  printf("Bin_System.Qr_code_data_flag=%d\r\n",Bin_System.Qr_code_data_flag);
-        }
-
-
-
-
-        break;
-    case Qr_code_busy :
-//				      printf("jinru");
-        /*****start print***********/
-        if(Bin_System.print_state_flag==0)
-        {
-            Bin_System.print_state_flag=1;
-            print_qr_data(Bin_System.Qr_code_data,Bin_System.Qr_code_data_len);
-//												  osDelay(500);
-            //设置定时器标志启动计算时间
-            printf("开启30秒计数\r\n");
-            set_tim_flag(1);
-            Bin_System.tim_count_flag=1;
-        }
-        //进入检测垃圾状态
-        if(Bin_System.tim_count_flag==1)
-        {
-
-
-            get_timout_flag(&Bin_System.door_timout_flag);
-            if(Bin_System.door_timout_flag==0)
-            {
-
-                //检测垃圾重量
-                if(Bin_System.height_flag)
-                {
-                    printf("jinlai");
-                    Bin_System.height_flag=0;
-                    get_weight_value(&Bin_System.weight_end);
-                    uint16_t	difference_data=Bin_System.weight_end-Bin_System.weight_last;
-                    printf("未丢垃圾的重量为:%d克\r\n",Bin_System.weight_last);
-                    printf("丢垃圾的重量为:%d克\r\n",Bin_System.weight_end);
-                    //大于30克
-                    if((difference_data>20)&&(Bin_System.weight_end>Bin_System.weight_last))
-                    {
-                        //关闭定时器技术
-                        set_tim_flag(0);
-                        Bin_System.tim_count_flag=0;
-                        printf("丢垃圾成功\r\n");
-                        Qr_code_state=Qr_code_idle;
-                        printf("业务完成\r\n");
-                    }
-                    else
-                    {
-                        printf("请丢垃圾\r\n");
-                    }
-                }
-                else
-                {
-                    //检测数据是否有数据
-                    get_weight_command();
-//																	u4_unpack(&Bin_System.height_flag);
-
-                }
-            }
-            else {
-                set_timout_flag(0);
-                set_tim_flag(0);
-                Bin_System.tim_count_flag=0;
-                Qr_code_state=Qr_code_idle;
-                printf("用户没丢垃圾\r\n");
-                printf("业务失败\r\n");
-            }
-
-
-        }
-
-
-        break;
-    default:
-        break;
-    }
-
-}
 
 
 

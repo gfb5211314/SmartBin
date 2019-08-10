@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include "bsp_print.h"
 #include "stdio.h"
+#include "bsp_esp8266.h"
 extern UART_HandleTypeDef huart2;
 USART_RECEIVETYPE  UsartType2;
 

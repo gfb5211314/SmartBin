@@ -165,7 +165,7 @@ void MD5Transform(unsigned int state[4],unsigned char block[64])
  char  test_cpt[100]; 
 char *  MD5_data(char *appid, char *appkey,char *account,char *timestamp)
 {
-       int i;
+       uint8_t i;
 	 char encrypt[200];
    char decrypt[200];    
 	 
@@ -175,7 +175,7 @@ char *  MD5_data(char *appid, char *appkey,char *account,char *timestamp)
 	MD5Update(&md5,(uint8_t *)decrypt,strlen((char *)decrypt));
 	MD5Final(&md5,(uint8_t *)encrypt);     
 //  sprintf(test_cpt,"%d",encrypt);//
-	printf("加密前:%s\n加密后:",decrypt);
+//	printf("加密前:%s\n加密后:",decrypt);
 //	printf("%s",test_cpt);
 	for(i=0; i < 16; i++)
 	{
